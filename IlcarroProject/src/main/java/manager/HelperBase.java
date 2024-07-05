@@ -23,12 +23,19 @@ public class HelperBase {
     }
 
     public void click(By locator){
-        WebElement element = wd.findElement(locator);
-        element.click();
+        wd.findElement(locator).click();
     }
 
     public boolean isElementPresent(By locator){
         List<WebElement> list = wd.findElements(locator);
         return list.size()>0;
+    }
+
+    public void pause(int time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -2,6 +2,7 @@ package manager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class HelperUser extends HelperBase{
 
@@ -22,12 +23,21 @@ public class HelperUser extends HelperBase{
         click(By.xpath("//button[@type='submit']"));
     }
 
+    public void loggout() {
+        click(By.xpath("//a[text()=' Logout ']"));
+    }
+
+    public void clickOk(){
+        click(By.xpath("//button[@type='button']"));
+    }
+
     public boolean isLogged() {
         return isElementPresent(By.xpath("//a[text()=' Logout ']"));
     }
 
-    public void loggout() {
-        click(By.xpath("//a[text()=' Logout ']"));
+    public String getMessage(){
+        pause(1000);
+        return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
     }
 
 }

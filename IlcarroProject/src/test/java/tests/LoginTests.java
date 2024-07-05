@@ -1,7 +1,7 @@
 package tests;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,9 +19,8 @@ public class LoginTests extends TestBase {
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm("testolga@gmail.com", "Test1101!");
         app.getHelperUser().submitLogin();
-        app.getHelperUser().click(By.xpath("//button[@type='button']"));
 
-        Assert.assertTrue(app.getHelperUser().isLogged());
+        Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
     }
 
     @Test
@@ -30,6 +29,12 @@ public class LoginTests extends TestBase {
         app.getHelperUser().fillLoginForm("testolga@gmail.com", "Test1101!");
         app.getHelperUser().submitLogin();
 
-        Assert.assertTrue(app.getHelperUser().isLogged());
+        Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
     }
+
+    @AfterMethod
+    public void postCondition(){
+        app.getHelperUser().clickOk();
+    }
+
 }
