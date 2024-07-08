@@ -32,6 +32,8 @@ public class LoginTests extends TestBase {
         Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
     }
 
+    //Login or Password incorrect
+
     @AfterMethod
     public void postCondition(){
         app.getHelperUser().clickOk();
