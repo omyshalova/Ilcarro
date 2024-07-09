@@ -7,13 +7,6 @@ public class User {
     private String email;
     private String password;
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -30,21 +23,26 @@ public class User {
         return password;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
+
 
     @Override
     public String toString() {
