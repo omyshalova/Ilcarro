@@ -40,4 +40,5 @@ public class HelperUser extends HelperBase{
         return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
     }
 
+
 }
