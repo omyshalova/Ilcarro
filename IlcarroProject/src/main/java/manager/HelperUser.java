@@ -44,7 +44,6 @@ public class HelperUser extends HelperBase{
     }
 
     public String getMessage(){
-        pause(1000);
         return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
     }
 
@@ -53,15 +52,24 @@ public class HelperUser extends HelperBase{
     }
 
     public boolean isYallaButtonNotActive() {
-//        boolean res = isElementPresent(By.cssSelector("button[disabled]"));
-//        boolean res1 = wd.findElement(By.cssSelector("button[type='submit']"));
-        return !wd.findElement(By.cssSelector("button[type='submit']")).isEnabled();
+        boolean res = isElementPresent(By.cssSelector("button[disabled]"));
+        WebElement element = wd.findElement(By.cssSelector("button[type='submit']"));
+        boolean result = element.isEnabled();
+
+        return res && !result;
     }
 
     //Registration
 
     public void openRegistrationForm() {
         click(By.xpath("//*[text()=' Sign up ']"));
+    }
+
+    public void fillRegistrationFrom(String name, String lastName, String email, String password){
+        type(By.xpath("//input[@id='name']"), name);
+        type(By.xpath("//input[@id='lastName']"), lastName);
+        type(By.xpath("//input[@id='email']"), email);
+        type(By.xpath("//input[@id='password']"), password);
     }
 
     public void fillRegistrationFrom(User user) {
@@ -80,12 +88,32 @@ public class HelperUser extends HelperBase{
         WebElement label = wd.findElement(By.cssSelector("label[for='terms-of-use']"));
         Rectangle rect = label.getRect();
         int width = rect.getWidth();
-
 //        Dimension size = wd.manage().window().getSize();
-
         int xOffSet = -width/2;
         Actions actions = new Actions(wd);
         actions.moveToElement(label, xOffSet, 0).click().release().perform();
 
+    }
+
+
+    public String getWrongEmailFormatMessage() {
+        return wd.findElement(By.xpath("//div[text()='Wrong email format']")).getText();
+    }
+
+    public boolean isWrongPasswordFormat() {
+        String messege = wd.findElement(By.xpath("//div[contains(text(),'Password must contain')]")).getText();
+        return messege.contains("Password must contain");
+    }
+
+    public String getEmptyPasswordMessage() {
+        return wd.findElement(By.xpath("//div[text()='Password is required']")).getText();
+    }
+
+    public String getEmptyNameFieldMessage() {
+        return wd.findElement(By.xpath("//div[text()=' Name is required ']")).getText();
+    }
+
+    public String getEmptyLastNameFieldMessage() {
+        return wd.findElement(By.xpath("//div[text()=' Last name is required ']")).getText();
     }
 }
