@@ -20,7 +20,7 @@ public class RegistrationTests extends TestBase{
 
     //Positive
 
-    @Test
+    @Test(enabled = true)
     public void registrationSuccess(){
         int i = (int)(System.currentTimeMillis()/1000)%36000;
         User user =new User()
@@ -33,6 +33,8 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().fillRegistrationFrom(user);
         app.getHelperUser().checkPolicyXY();
         app.getHelperUser().submit();
+
+        app.getHelperUser().pause(500);
 
         Assert.assertEquals(app.getHelperUser().getMessage(), "You are logged in success");
     }
@@ -53,7 +55,7 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().submit();
 
 
-        softAssert.assertEquals(app.getHelperUser().getWrongEmailFormatMessage(), "Wrong email format");
+        softAssert.assertEquals(app.getHelperUser().getErrorText(), "Wrong email format");
         softAssert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
 
     }
@@ -96,11 +98,10 @@ public class RegistrationTests extends TestBase{
 
     @Test
     public void registrationEmptyPasswordField(){
-        int i = (int)(System.currentTimeMillis()/1000)%36000;
         User user =new User()
                 .setFirstName("Mary")
                 .setLastName("Popins")
-                .setEmail("popins"+i+"@gmail.com")
+                .setEmail("popins@gmail.com")
                 .setPassword("");
 
         app.getHelperUser().openRegistrationForm();
@@ -115,34 +116,29 @@ public class RegistrationTests extends TestBase{
 
     @Test
     public void registrationEmptyNameField(){
-        int i = (int)(System.currentTimeMillis()/1000)%36000;
+
         User user =new User()
                 .setFirstName("")
                 .setLastName("Popins")
-                .setEmail("popins"+i+"@gmail.com")
+                .setEmail("popins@gmail.com")
                 .setPassword("Popins123581!");
 
         app.getHelperUser().openRegistrationForm();
-        app.getHelperUser().fillRegistrationFrom(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPassword());
+        app.getHelperUser().fillRegistrationFrom(user);
         app.getHelperUser().checkPolicyXY();
         app.getHelperUser().submit();
 
-        softAssert.assertEquals(app.getHelperUser().getEmptyNameFieldMessage(), " Name is required ");
+        softAssert.assertEquals(app.getHelperUser().getErrorText(), "Name is required");
         softAssert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
 
     }
 
     @Test
     public void registrationEmptyLastNameField(){
-        int i = (int)(System.currentTimeMillis()/1000)%36000;
         User user =new User()
                 .setFirstName("Mary")
                 .setLastName("")
-                .setEmail("popins"+i+"@gmail.com")
+                .setEmail("popins@gmail.com")
                 .setPassword("Popins123581!");
 
         app.getHelperUser().openRegistrationForm();
@@ -157,11 +153,10 @@ public class RegistrationTests extends TestBase{
 
     @Test
     public void registrationPolicyButtonNotChecked(){
-        int i = (int)(System.currentTimeMillis()/1000)%36000;
         User user =new User()
                 .setFirstName("Mary")
                 .setLastName("Popins")
-                .setEmail("popins" + i + "@gmail.com")
+                .setEmail("popins@gmail.com")
                 .setPassword("Popins1235813!");
 
         app.getHelperUser().openRegistrationForm();
@@ -173,6 +168,7 @@ public class RegistrationTests extends TestBase{
 
     @AfterMethod
     public void postCondition(){
+
         app.getHelperUser().clickOk();
     }
 }

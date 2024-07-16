@@ -26,10 +26,6 @@ public class HelperUser extends HelperBase{
         type(By.xpath("//input[@id='password']"), user.getPassword());
     }
 
-    public void submit(){
-        click(By.xpath("//button[@type='submit']"));
-    }
-
     public void loggout() {
         click(By.xpath("//a[text()=' Logout ']"));
     }
@@ -41,10 +37,6 @@ public class HelperUser extends HelperBase{
 
     public boolean isLogged() {
         return isElementPresent(By.xpath("//a[text()=' Logout ']"));
-    }
-
-    public String getMessage(){
-        return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
     }
 
     public String getErrorText() {
@@ -85,19 +77,15 @@ public class HelperUser extends HelperBase{
     }
 
     public void checkPolicyXY(){
-        WebElement label = wd.findElement(By.cssSelector("label[for='terms-of-use']"));
-        Rectangle rect = label.getRect();
-        int width = rect.getWidth();
+        if (!wd.findElement(By.id("terms-of-use")).isSelected()) {
+            WebElement label = wd.findElement(By.cssSelector("label[for='terms-of-use']"));
+            Rectangle rect = label.getRect();
+            int width = rect.getWidth();
 //        Dimension size = wd.manage().window().getSize();
-        int xOffSet = -width/2;
-        Actions actions = new Actions(wd);
-        actions.moveToElement(label, xOffSet, 0).click().release().perform();
-
-    }
-
-
-    public String getWrongEmailFormatMessage() {
-        return wd.findElement(By.xpath("//div[text()='Wrong email format']")).getText();
+            int xOffSet = -width / 2;
+            Actions actions = new Actions(wd);
+            actions.moveToElement(label, xOffSet, 0).click().release().perform();
+        }
     }
 
     public boolean isWrongPasswordFormat() {
@@ -105,15 +93,14 @@ public class HelperUser extends HelperBase{
         return messege.contains("Password must contain");
     }
 
-    public String getEmptyPasswordMessage() {
-        return wd.findElement(By.xpath("//div[text()='Password is required']")).getText();
-    }
-
-    public String getEmptyNameFieldMessage() {
-        return wd.findElement(By.xpath("//div[text()=' Name is required ']")).getText();
-    }
-
     public String getEmptyLastNameFieldMessage() {
         return wd.findElement(By.xpath("//div[text()=' Last name is required ']")).getText();
+    }
+
+    public void login(User user) {
+        openLoginForm();
+        fillLoginForm(user);
+        submit();
+        clickOk();
     }
 }
