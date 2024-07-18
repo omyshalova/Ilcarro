@@ -6,10 +6,13 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.Random;
 
 public class AddNewCarTests extends TestBase{
+
+    SoftAssert softAssert = new SoftAssert();
 
     @BeforeClass
     public void preCondition(){

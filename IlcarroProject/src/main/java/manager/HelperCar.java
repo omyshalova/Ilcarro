@@ -7,10 +7,6 @@ import org.openqa.selenium.support.ui.Select;
 
 public class HelperCar extends HelperBase{
 
-    public void returnToHomePage(){
-        click(By.xpath("//button[text()='Search cars']"));
-    };
-
     public HelperCar(WebDriver wd) {
         super(wd);
     }
@@ -50,5 +46,9 @@ public class HelperCar extends HelperBase{
         type(By.id("pickUpPlace"), location);
         click(By.cssSelector("div.pac-item"));
     }
+
+    public void returnToHomePage(){
+        click(By.xpath("//button[text()='Search cars']"));
+    };
 
 }
