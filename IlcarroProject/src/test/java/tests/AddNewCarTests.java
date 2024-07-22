@@ -39,6 +39,7 @@ public class AddNewCarTests extends TestBase{
 
         app.getHelperCar().openCarForm();
         app.getHelperCar().fillCarForm(car);
+        app.getHelperCar().attachPhoto("C:\\Users\\Olga Myshalova\\OneDrive\\GitHub\\Ilcarro\\IlcarroProject\\pexels-photo-210019.jpeg");
         app.getHelperCar().submit();
 
         app.getHelperCar().pause(500);

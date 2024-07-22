@@ -51,4 +51,8 @@ public class HelperCar extends HelperBase{
         click(By.xpath("//button[text()='Search cars']"));
     };
 
+    public void attachPhoto(String link) {
+        wd.findElement(By.cssSelector("#photos")).sendKeys(link);
+    }
+
 }
