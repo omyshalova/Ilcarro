@@ -18,6 +18,8 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
 }
 
 test {

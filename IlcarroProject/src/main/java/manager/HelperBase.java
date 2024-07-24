@@ -1,9 +1,12 @@
 package manager;
 
+import com.google.common.io.Files;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class HelperBase {
@@ -18,6 +21,7 @@ public class HelperBase {
         element.click();
         element.clear();
         clearNew(element);
+        clearTextField(locator);
         if (text!=null) {
             element.sendKeys(text);
         }
@@ -63,6 +67,16 @@ public class HelperBase {
     public String getMessage(){
         pause(5);
         return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
+    }
+
+    public void getScreen(String link) {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) wd;
+        File tmp = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        try {
+            Files.copy(tmp,new File(link));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
