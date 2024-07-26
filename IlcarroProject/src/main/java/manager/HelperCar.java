@@ -55,4 +55,26 @@ public class HelperCar extends HelperBase{
         wd.findElement(By.cssSelector("#photos")).sendKeys(link);
     }
 
+    public void searchCurrentMonth(String city, String dateFrom, String dateTo) {
+        typeCity(city);
+        click(By.id("dates"));
+//        "7/27/2024", "7/30/2024/
+        String[] from = dateFrom.split("/");
+        String[] to = dateTo.split("/");
+
+        String locatorFrom = "//div[text()=' " + from[1] + " ']";
+        String locatorTo = "//div[text()=' " + to[1] + " ']";
+
+        click(By.xpath(locatorFrom));
+        click(By.xpath(locatorTo));
+
+    }
+
+    private void typeCity(String city) {
+        type(By.id("city"), city);
+        click(By.cssSelector("div.pac-item"));
+    }
+
+    public boolean isListOfCarsAppeared() {
+        return isElementPresent(By.cssSelector("a.car-container"));    }
 }
