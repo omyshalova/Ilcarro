@@ -73,8 +73,11 @@ public class HelperCar extends HelperBase{
     }
 
     private void typeCity(String city) {
+
         type(By.id("city"), city);
+        pause(200);
         click(By.cssSelector("div.pac-item"));
+
     }
 
     public boolean isListOfCarsAppeared() {
@@ -85,18 +88,16 @@ public class HelperCar extends HelperBase{
         click(By.id("dates"));
 
         LocalDate now = LocalDate.now();
-        int month = now.getMonthValue();
-
         LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
         LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
 
-        int diffMonth = from.getMonthValue() - month;
+        int diffMonth = from.getMonthValue() -  now.getMonthValue();
         if(diffMonth>0){
             clickNextMonthBtn(diffMonth);
         }
         click(By.xpath("//div[text()=' " + from.getDayOfMonth() + " ']"));
 
-        diffMonth = to.getMonthValue() - from.getDayOfMonth();
+        diffMonth = to.getMonthValue() - from.getMonthValue();
         if(diffMonth>0){
             clickNextMonthBtn(diffMonth);
         }
@@ -107,11 +108,12 @@ public class HelperCar extends HelperBase{
     private void clickNextMonthBtn(int diffMonth) {
         for (int i = 0; i < diffMonth; i++) {
             click(By.cssSelector("button[aria-label='Next month']"));
-
         }
     }
 
     public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
+        //{"Rehovot", "2/15/2024", "3/25/2025"}
+
         typeCity(city);
         click(By.id("dates"));
 
@@ -124,17 +126,20 @@ public class HelperCar extends HelperBase{
         if (diffYear==0){
             diffMonth = from.getMonthValue() - now.getMonthValue();
         }else {
-            diffMonth = 12 - from.getMonthValue() + from.getMonthValue();
+            diffMonth = 12 - now.getMonthValue() + from.getMonthValue();
         }
         clickNextMonthBtn(diffMonth);
-        String locator = String.format("//div[text()=' %s ']", from.getDayOfMonth());
-        click(By.xpath(locator));
+        String locatorFrom = String.format("//div[text()=' %s ']", from.getDayOfMonth());
+        click(By.xpath(locatorFrom));
 
-
-
-
-
-
-
+        diffYear = to.getYear() - from.getYear();
+        if (diffYear==0){
+            diffMonth = to.getMonthValue() - from.getMonthValue();
+        }else {
+            diffMonth = 12 - from.getMonthValue() + to.getMonthValue();
+        }
+        clickNextMonthBtn(diffMonth);
+        String locatorTo = String.format("//div[text()=' %s ']", to.getDayOfMonth());
+        click(By.xpath(locatorTo));
     }
 }

@@ -23,17 +23,21 @@ public class TestBase {
 
     @BeforeMethod
     public void startLogger(Method m){
-        logger.info("Start of the method ---> {} ({})", m.getName(), m.toGenericString());
+        logger.info("   Start method {} ({})", m.getName(), m.toGenericString());
     }
 
     @AfterMethod
     public void endLogger(Method m){
-        logger.info("End of the method ---> {} ({})", m.getName(), m.toGenericString());
+        logger.info("*************************************************************");
     }
 
     @AfterSuite
     public void tearDown(){
         app.stop();
+    }
+
+    public void logUserData(String email, String password) {
+        logger.info("Test data: email - {} & password - {}", email, password);
     }
 
 }

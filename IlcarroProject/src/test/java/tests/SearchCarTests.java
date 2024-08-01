@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderDates;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,17 +16,20 @@ public class SearchCarTests extends TestBase{
 
     @Test
     public void searchCurrentYearSuccess(){
-        app.getHelperCar().searchCurrentYear("Rehovot", "10/15/2024", "10/10/2024");
+
+        app.getHelperCar().searchCurrentYear("Rehovot", "10/15/2024", "10/25/2024");
         app.getHelperCar().submit();
 
         Assert.assertTrue(app.getHelperCar().isListOfCarsAppeared());
 
     }
 
-    @Test
-    public void searchAnyPeriodSuccess(){
-        app.getHelperCar().searchAnyPeriod("Rehovot", "10/15/2024", "10/10/2025");
+    @Test(dataProvider = "searchAnyPeriodPositive", dataProviderClass = DataProviderDates.class)
+    public void searchAnyPeriodSuccess(String city, String dateFrom, String dateTo){
+        app.getHelperCar().searchAnyPeriod(city, dateFrom, dateTo);
         app.getHelperCar().submit();
+
+        Assert.assertTrue(app.getHelperCar().isListOfCarsAppeared());
 
     }
 

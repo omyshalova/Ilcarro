@@ -2,8 +2,6 @@ package manager;
 
 import com.google.common.io.Files;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +18,8 @@ public class HelperBase {
         WebElement element = wd.findElement(locator);
         element.click();
         element.clear();
-        clearNew(element);
-        clearTextField(locator);
+//        clearNew(element);
+        clearTextFieldByElement(element);
         if (text!=null) {
             element.sendKeys(text);
         }
@@ -31,9 +29,18 @@ public class HelperBase {
         element.sendKeys(" ");
         element.sendKeys(Keys.BACK_SPACE);
     }
-
-    public void clearTextField(By locator){
+    public void clearTextFieldByLocator(By locator){
         WebElement element = wd.findElement(locator);
+        String os = System.getProperty("os.name");
+        if (os.startsWith("Win")){
+            element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        }else {
+            element.sendKeys(Keys.COMMAND, "a");
+        }
+        element.sendKeys(Keys.DELETE);
+    }
+    public void clearTextFieldByElement(WebElement element){
+//        WebElement element = wd.findElement(locator);
         String os = System.getProperty("os.name");
         if (os.startsWith("Win")){
             element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -46,6 +53,14 @@ public class HelperBase {
     public void click(By locator){
         wd.findElement(locator).click();
     }
+
+    public void doubleClick(By locator){
+        WebElement element = wd.findElement(locator);
+        element.click();
+        element.click();
+    }
+
+
 
     public boolean isElementPresent(By locator){
         List<WebElement> list = wd.findElements(locator);

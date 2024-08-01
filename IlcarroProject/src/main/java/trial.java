@@ -1,6 +1,7 @@
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 
-public class main {
+public class trial {
 
     public static void main(String[] args){
         LocalDate now = LocalDate.now();
@@ -11,5 +12,6 @@ public class main {
         System.out.println(now.getDayOfMonth());
         System.out.println(now);
     }
+
 
 }

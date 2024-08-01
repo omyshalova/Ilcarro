@@ -21,6 +21,8 @@ public class LoginTests extends TestBase {
     public void loginSuccess1(){
         User user = new User().setEmail("testolga@gmail.com").setPassword("Test1101!");
 
+        logUserData(user.getEmail(), user.getPassword());
+
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm(user);
         app.getHelperUser().submit();
