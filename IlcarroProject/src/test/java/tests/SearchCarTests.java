@@ -5,6 +5,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+
 public class SearchCarTests extends TestBase{
 
     @BeforeMethod
@@ -14,28 +18,46 @@ public class SearchCarTests extends TestBase{
 
     @Test
     public void searchCurrentMonthSuccess(){
-        app.getHelperCar().searchCurrentMonth("Rehovot", "8/5/2024", "8/25/2024");
-        app.getHelperCar().getScreen("src/test/screenshots/currentMonth.png");
+        LocalDate now = LocalDate.now();
+        String dateFrom = String.format("%s/%s/%s", now.getMonthValue(), now.getDayOfMonth()+1, now.getYear());
+        String dateTo = String.format("%s/%s/%s", now.getMonthValue(), now.getDayOfMonth()+2, now.getYear());
+        logger.info("Dates: from - {} to - {}", dateFrom, dateTo);
+        app.getHelperCar().searchCurrentMonth("Rehovot", dateFrom, dateTo);
+//        app.getHelperCar().getScreen("src/test/screenshots/currentMonth.png");
         app.getHelperCar().submit();
         Assert.assertTrue(app.getHelperCar().isListOfCarsAppeared());
+        logger.info("Assert: Search-result table is present");
     }
 
     @Test
     public void searchCurrentYearSuccess(){
-
-        app.getHelperCar().searchCurrentYear("Rehovot", "10/15/2024", "10/25/2024");
-        app.getHelperCar().getScreen("src/test/screenshots/currentYear.png");
+        LocalDate now = LocalDate.now();
+        String dateFrom = String.format("%s/%s/%s", now.getMonthValue(), now.getDayOfMonth()+1, now.getYear());
+        String dateTo = String.format("%s/%s/%s", now.getMonthValue()+1, now.getDayOfMonth(), now.getYear());
+        logger.info("Dates: from - {} to - {}", dateFrom, dateTo);
+        app.getHelperCar().searchCurrentYear("Rehovot", dateFrom, dateTo);
         app.getHelperCar().submit();
-
         Assert.assertTrue(app.getHelperCar().isListOfCarsAppeared());
+        logger.info("Assert: Search-result table is present");
     }
 
     @Test(dataProvider = "searchAnyPeriodPositive", dataProviderClass = DataProviderDates.class)
     public void searchAnyPeriodSuccess(String city, String dateFrom, String dateTo){
+        logger.info("Dates: from - {} to - {}", dateFrom, dateTo);
         app.getHelperCar().searchAnyPeriod(city, dateFrom, dateTo);
         app.getHelperCar().getScreen("src/test/screenshots/currentAnydate.png");
         app.getHelperCar().submit();
+        logger.info("Assert: Search-result table is present");
+        Assert.assertTrue(app.getHelperCar().isListOfCarsAppeared());
+    }
 
+    @Test(dataProvider = "datesCSV", dataProviderClass = DataProviderDates.class)
+    public void searchAnyPeriodSuccessFile(String city, String dateFrom, String dateTo){
+        logger.info("Dates: from - {} to - {}", dateFrom, dateTo);
+        app.getHelperCar().searchAnyPeriod(city, dateFrom, dateTo);
+        app.getHelperCar().getScreen("src/test/screenshots/currentAnydate.png");
+        app.getHelperCar().submit();
+        logger.info("Assert: Search-result table is present");
         Assert.assertTrue(app.getHelperCar().isListOfCarsAppeared());
     }
 

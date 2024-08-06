@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderCars;
 import models.Car;
 import models.User;
 import org.testng.Assert;
@@ -39,13 +40,17 @@ public class AddNewCarTests extends TestBase{
 
         app.getHelperCar().openCarForm();
         app.getHelperCar().fillCarForm(car);
-        app.getHelperCar().attachPhoto("C:\\Users\\Olga Myshalova\\OneDrive\\GitHub\\Ilcarro\\IlcarroProject\\pexels-photo-210019.jpeg");
+        app.getHelperCar().attachPhoto(
+                "C:\\Users\\Olga Myshalova\\OneDrive\\GitHub\\Ilcarro\\IlcarroProject\\src\\test\\photos\\car-01.jpeg");
+
         app.getHelperCar().submit();
 
         app.getHelperCar().pause(500);
 
         Assert.assertTrue(app.getHelperCar().getMessage().contains("added successful"));
-        Assert.assertEquals(app.getHelperCar().getMessage(), car.getManufacture()+" "+car.getModel()+" added successful");
+        Assert.assertEquals(
+                app.getHelperCar().getMessage(),
+                car.getManufacture()+" "+car.getModel()+" added successful");
     }
 
     @Test
@@ -70,7 +75,25 @@ public class AddNewCarTests extends TestBase{
         app.getHelperCar().submit();
 
         Assert.assertTrue(app.getHelperCar().getMessage().contains("added successful"));
-        Assert.assertEquals(app.getHelperCar().getMessage(), car.getManufacture()+" "+car.getModel()+" added successful");
+        Assert.assertEquals(
+                app.getHelperCar().getMessage(),
+                car.getManufacture()+" "+car.getModel()+" added successful");
+    }
+
+    @Test(dataProvider = "carCSV", dataProviderClass = DataProviderCars.class)
+    public void AddNewCarSuccessDP(Car car){
+
+        app.getHelperCar().openCarForm();
+        app.getHelperCar().fillCarForm(car);
+        app.getHelperCar().attachPhoto(car.getPhotoLink());
+        app.getHelperCar().submit();
+
+        app.getHelperCar().pause(500);
+
+        Assert.assertTrue(app.getHelperCar().getMessage().contains("added successful"));
+        Assert.assertEquals(
+                app.getHelperCar().getMessage(),
+                car.getManufacture()+" "+car.getModel()+" added successful");
     }
 
     @AfterMethod
