@@ -11,7 +11,7 @@ public class RegistrationTests extends TestBase{
 
     SoftAssert softAssert = new SoftAssert();
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition() {
         if (app.getHelperUser().isLogged()) {
             app.getHelperUser().loggout();
@@ -41,7 +41,7 @@ public class RegistrationTests extends TestBase{
 
     //Negative
 
-    @Test
+    @Test(groups = {"smoke", "regress", "restart"})
     public void registrationWrongEmailFormat(){
         User user =new User()
                 .setFirstName("Mary")
@@ -166,7 +166,7 @@ public class RegistrationTests extends TestBase{
         softAssert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void postCondition(){
 
         app.getHelperUser().clickOk();

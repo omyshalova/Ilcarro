@@ -15,14 +15,14 @@ public class AddNewCarTests extends TestBase{
 
     SoftAssert softAssert = new SoftAssert();
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void preCondition(){
         if (!app.getHelperUser().isLogged()){
          app.getHelperUser().login(new User().setEmail("testolga@gmail.com").setPassword("Test1101!"));
         }
     }
 
-    @Test
+    @Test(groups = {"smoke", "regress", "restart"})
     public void AddNewCarSuccess(){
         int i = new Random().nextInt(1000)+1000;
         Car car = Car.builder()
@@ -96,7 +96,7 @@ public class AddNewCarTests extends TestBase{
                 car.getManufacture()+" "+car.getModel()+" added successful");
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void postCondition(){
         app.getHelperCar().returnToHomePage();
     }

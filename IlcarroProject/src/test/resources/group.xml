@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Suite3">
+    <test name="Package1">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.RegistrationTests"/>
+            <class name="tests.LoginTests"/>
+            <class name="tests.AddNewCarTests"/>
+            <class name="tests.SearchCarTests"/>
+        </classes>
+    </test>
+</suite>

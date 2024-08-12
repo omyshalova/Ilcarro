@@ -10,7 +10,7 @@ import javax.lang.model.element.TypeElement;
 
 public class LoginTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition() {
         if (app.getHelperUser().isLogged()) {
             app.getHelperUser().loggout();
@@ -30,7 +30,7 @@ public class LoginTests extends TestBase {
         Assert.assertEquals(app.getHelperUser().getMessage(), "Logged in success");
     }
 
-    @Test
+    @Test(groups = {"smoke", "regress", "restart"})
     public void loginSuccess(){
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm("testolga@gmail.com", "Test1101!");

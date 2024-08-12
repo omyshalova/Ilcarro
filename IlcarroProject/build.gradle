@@ -25,3 +25,37 @@ dependencies {
 test {
     useTestNG()
 }
+
+tasks.register('qa', Test) {
+    useTestNG() {
+        def suite = System.getProperty('suite', '')
+
+        if (suite == 'quick') {
+            suites 'src/test/resources/quick.xml'
+        } else if (suite == 'login') {
+            suites 'src/test/resources/login.xml'
+        } else {
+            suites 'src/test/resources/testng.xml'
+        }
+    }
+
+    if(project.hasProperty('browser')){
+        systemProperty 'browser', "${browser}"
+    }
+}
+
+tasks.register('group', Test){
+    useTestNG(){
+        suites 'src/test/resources/group.xml'
+    }
+}
+
+tasks.register('team', Test){
+    useTestNG(){
+        def groups = System.getProperty('groups')
+        if (groups != null) {
+            includeGroups groups
+        }
+        suites 'src/test/resources/base.xml'
+    }
+}

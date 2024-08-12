@@ -1,6 +1,7 @@
 package tests;
 
 import manager.ApplicationManager;
+import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
@@ -12,26 +13,26 @@ import java.lang.reflect.Method;
 
 public class TestBase {
 
-    static ApplicationManager app = new ApplicationManager();
+    static ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void setApp(){
         app.init();
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void startLogger(Method m){
         logger.info("   Start method {} ({})", m.getName(), m.toGenericString());
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void endLogger(Method m){
         logger.info("*************************************************************");
     }
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void tearDown(){
         app.stop();
     }

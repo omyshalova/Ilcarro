@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class SearchCarTests extends TestBase{
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition(){
         app.getHelperCar().navigateByLogo();
     }
@@ -29,7 +29,7 @@ public class SearchCarTests extends TestBase{
         logger.info("Assert: Search-result table is present");
     }
 
-    @Test
+    @Test(groups = {"smoke", "regress", "restart"})
     public void searchCurrentYearSuccess(){
         LocalDate now = LocalDate.now();
         String dateFrom = String.format("%s/%s/%s", now.getMonthValue(), now.getDayOfMonth()+1, now.getYear());
